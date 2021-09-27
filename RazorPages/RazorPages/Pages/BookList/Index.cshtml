@@ -42,8 +42,8 @@
                                 @Html.DisplayFor(m => item.ISBN)
                             </td>
                             <td>
-                                <button class="btn btn-danger btn-sm text-white">Delete</button>
-                                <button class="btn btn-success btn-sm text-white">Edit</button>
+                                <button asp-page-handler="Delete" asp-route-id="@item.ID" onclick="return confirm('Are you shure')" class="btn btn-danger btn-sm text-white">Delete</button>
+                                <a asp-page="Edit" asp-route-id="@item.ID" class="btn btn-success btn-sm text-white">Edit</a>
                             </td>
                         </tr>
                     }
@@ -55,4 +55,26 @@
             }
         </form>
     </div>
+
+    <div class="col-md-12" style="text-align:center">
+        <br/>
+        <span class="h3 text-info">OR</span>
+        <br/>
+    </div>
+    <div class="col-12 border p-3">
+
+        <table id="DT_Laod" class="table table-stripped table-bordered" style="width: 100%">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 </div>
+@section Scripts {
+    <script src="~/js/bookList.js"></script>
+}
