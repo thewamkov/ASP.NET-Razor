@@ -1,6 +1,6 @@
 var dataTable;
 
-$(document).ready(function () {
+$(document).ready(function() {
     loadDataTable();
 });
 
@@ -17,9 +17,10 @@ function loadDataTable() {
             { "data": "isbn", "width": "20%" },
             {
                 "data": "id",
-                "render": function (data) {
+                "render": function(data) {
                     return `<div class="text-center">
-                        <a href="/BookList/Edit?id=${data}" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
+                        <a href="/BookList/Upsert?id=${data
+                        }" class='btn btn-success text-white' style='cursor:pointer; width:70px;'>
                             Edit
                         </a>
                         &nbsp;
@@ -28,7 +29,8 @@ function loadDataTable() {
                             Delete
                         </a>
                         </div>`;
-                }, "width": "40%"
+                },
+                "width": "40%"
             }
         ],
         "language": {
@@ -38,3 +40,27 @@ function loadDataTable() {
     });
 }
 
+function Delete(url) {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover",
+        icon: "warning",
+        dangerMode: true,
+        buttons: true
+    }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                success: function(data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    } else {
+                        toastr.error(data.message);
+                    }
+                }
+            })
+        }
+    })
+}
